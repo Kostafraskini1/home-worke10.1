@@ -8,7 +8,7 @@ def mask_account_card(data_card: str) -> str:
     for i in data_card:
         if i.isalpha():
             text_result += i
-        elif i.isalpha():
+        elif i.isdigit():
             digit_count += 1
             digit_result += i
     if digit_count > 16:
