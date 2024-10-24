@@ -9,6 +9,7 @@ load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
 def convert_to_rub(transaction):
+    """Возвращает сумму транзакции в рублях"""
     amount = transaction["operationAmount"]["amount"]
     currency = transaction["operationAmount"]["currency"]["code"]
     if transaction['currency'] == 'RUB':
