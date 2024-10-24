@@ -22,3 +22,6 @@ def convert_to_rub(transaction):
     result = response.json()
 
     return float(transaction['amount']) * result['result']['RUB']
+
+
+
