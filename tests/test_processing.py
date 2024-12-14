@@ -1,6 +1,24 @@
 import pytest
 from src.processing import filter_by_state, sort_by_date
 
+@pytest.fixture
+def sample_accounts():
+    return [
+        {"account_number": "1234567890123456", "state": "active"},
+        {"account_number": "9876543210987654", "state": "inactive"},
+        {"account_number": "1111222233334444", "state": "active"},
+        {"account_number": "5555666677778888", "state": "pending"}
+    ]
+
+@pytest.fixture
+def sample_dates():
+    return [
+        {"date": "2021-01-01", "state": "active"},
+        {"date": "2023-01-01", "state": "inactive"},
+        {"date": "2022-01-01", "state": "active"},
+        {"date": "2021-12-31", "state": "pending"}
+    ]
+
 
 def test_filter_by_state(data_list):
     result = filter_by_state(data_list, "active")
