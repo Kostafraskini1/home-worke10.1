@@ -70,6 +70,23 @@ pytest-cov=src tests/
      for card_number in card_number_generator(1, 5):
          print(card_number)
      ```
+     
+# Декоратор log
+
+## Описание
+
+Декоратор `log` автоматически регистрирует детали выполнения функций, такие как время вызова, имя функции, передаваемые аргументы, результат выполнения и информация об ошибках.
+
+### Использование
+
+```python
+from decorators import log
+
+@log(filename="mylog.txt")
+def my_function(x, y):
+    return x + y
+
+my_function(1, 2)
 
 ## Документация:
 
