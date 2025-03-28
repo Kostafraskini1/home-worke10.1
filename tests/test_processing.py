@@ -1,35 +1,30 @@
 import pytest
 from src.processing import filter_by_state, sort_by_date
 
-
-def test_filter_by_state(data_list):
-    result = filter_by_state(data_list, "active")
-    expected = [
-        {"state": "active", "date": "2023-10-01"},
-        {"state": "active", "date": "2023-08-01"}
+@pytest.fixture
+def sample_data():
+    return [
+        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
+        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
     ]
-    assert result == expected
 
+def test_filter_by_state(sample_data):
+    assert filter_by_state(sample_data, 'EXECUTED') == [
+        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}
+    ]
+    assert filter_by_state(sample_data, 'CANCELED') == [
+        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
+    ]
+    assert filter_by_state(sample_data, 'NON_EXISTENT') == []
 
-@pytest.mark.parametrize("state, expected", [
-    ("inactive", [{"state": "inactive", "date": "2023-09-01"}]),
-    ("pending", [{"state": "pending", "date": "2023-10-05"}]),
-    ("active", [
-        {"state": "active", "date": "2023-10-01"},
-        {"state": "active", "date": "2023-08-01"}
-    ]),
+@pytest.mark.parametrize("type_sort, expected_order", [
+    (True, [41428829, 939719570, 594226727, 615064591]),
+    (False, [615064591, 594226727, 939719570, 41428829]),
 ])
-def test_filter_by_state_parametrized(data_list, state, expected):
-    result = filter_by_state(data_list, state)
-    assert result == expected
-
-
-def test_sort_by_date(data_list):
-    result = sort_by_date(data_list)
-    expected = [
-        {"state": "active", "date": "2023-10-01"},
-        {"state": "pending", "date": "2023-10-05"},
-        {"state": "inactive", "date": "2023-09-01"},
-        {"state": "active", "date": "2023-08-01"}
-    ]
-    assert result == expected
+def test_sort_by_date(sample_data, type_sort, expected_order):
+    sorted_data = sort_by_date(sample_data, type_sort)
+    assert [item['id'] for item in sorted_data] == expected_order
