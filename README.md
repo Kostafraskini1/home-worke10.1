@@ -40,6 +40,37 @@ pytest tests/
 флаг '--cov' при запуске 'pytest':bash
 pytest-cov=src tests/
 
+# Модуль generators
+
+## Описание
+
+Модуль содержит функции-генераторы для обработки данных транзакций.
+
+### Функции
+
+1. `filter_by_currency(transactions, currency_code)`: Генератор, который фильтрует транзакции по заданной валюте.
+   - **Пример использования**:
+     ```python
+     usd_transactions = filter_by_currency(transactions, "USD")
+     for transaction in usd_transactions:
+         print(transaction)
+     ```
+
+2. `transaction_descriptions(transactions)`: Генератор, который возвращает описания транзакций по очереди.
+   - **Пример использования**:
+     ```python
+     descriptions = transaction_descriptions(transactions)
+     for description in descriptions:
+         print(description)
+     ```
+
+3. `card_number_generator(start, stop)`: Генератор, который выдает номера банковских карт в заданном диапазоне.
+   - **Пример использования**:
+     ```python
+     for card_number in card_number_generator(1, 5):
+         print(card_number)
+     ```
+
 ## Документация:
 
 Для получения дополнительной информации обратитесь к [документации](docs/README.md).
